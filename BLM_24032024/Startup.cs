@@ -24,6 +24,7 @@ namespace BLM_24032024
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddRazorPages();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,19 +38,26 @@ namespace BLM_24032024
             //});
 
             app.UseStaticFiles();
-            app.Use(async (context,next) =>
+            app.UseDeveloperExceptionPage();
+            app.UseRouting();
+            app.UseEndpoints(endpoint =>
             {
-                await context.Response.WriteAsync("Hi from Middleware - 1 Start\n");
-                await next();
-                await context.Response.WriteAsync("Hi from Middleware - 1 End\n");
-
+                endpoint.MapControllerRoute("default", "{controller}/{action}/{id?}");
             });
+          
+            //app.Use(async (context,next) =>
+            //{
+            //    await context.Response.WriteAsync("Hi from Middleware - 1 Start\n");
+            //    await next();
+            //    await context.Response.WriteAsync("Hi from Middleware - 1 End\n");
+
+            //});
 
 
-            app.Run(async context =>
-            {
-                await context.Response.WriteAsync("Hi from Middleware - 2\n");
-            });
+            //app.Run(async context =>
+            //{
+            //    await context.Response.WriteAsync("Hi from Middleware - 2\n");
+            //});
 
             //if (env.IsDevelopment())
             //{
