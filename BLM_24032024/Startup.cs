@@ -1,3 +1,5 @@
+using BLM.DataAccess.ISERVICE;
+using BLM.DataAccess.SERVICE;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +27,7 @@ namespace BLM_24032024
         {
             //services.AddRazorPages();
             services.AddMvc();
+            services.AddSingleton<IPublisherRepo,PublisherRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
