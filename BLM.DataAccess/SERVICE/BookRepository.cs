@@ -8,26 +8,22 @@ using System.Threading.Tasks;
 
 namespace BLM.DataAccess.SERVICE
 {
-  public  class PublisherRepo : IPublisherRepo
+    public class BookRepository : IBookRepository
     {
         private readonly DataContext context;
-        public PublisherRepo()
+        public BookRepository()
         {
             context = new DataContext();
         }
-        public List<PublisherEntity> GetPublisher
+        public List<BookEntity> GetBooks()
         {
-            get
-            {
-               return context.Publishers.ToList();
-            }
+            return context.Books.ToList();
         }
-
-        public bool Add(PublisherEntity entity)
+        public bool AddBook(BookEntity entity)
         {
             try
             {
-                context.Publishers.Add(entity);
+                context.Books.Add(entity);
                 context.SaveChanges();
                 return true;
             }
@@ -36,5 +32,7 @@ namespace BLM.DataAccess.SERVICE
                 return false;
             }
         }
+
+       
     }
 }

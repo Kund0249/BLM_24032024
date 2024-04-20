@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BLM.DataAccess.ISERVICE
 {
-   public interface IPublisherRepo
+   public interface IBookRepository
     {
-        public List<PublisherEntity> GetPublisher { get;}
-        public bool Add(PublisherEntity entity);
+        public List<BookEntity> GetBooks();
+        public bool AddBook(BookEntity entity);
     }
 }

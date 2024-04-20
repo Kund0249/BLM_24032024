@@ -1,0 +1,63 @@
+﻿@model BLM_24032024.Models.BookCreateModel
+@{
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <table>
+                        <tr>
+                            <th>Publisher</th>
+                            <td>
+                                
+                                <select asp-for="PublisherId" class="form-control" asp-items="Model.PublisherList">
+                                    <option value="-1">Select Publisher</option>
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Book Title</th>
+                            <td>
+                                <input asp-for="BookName" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>No. of Pages</th>
+                            <td>
+                                <input asp-for="NoPage" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Price</th>
+                            <td>
+                                <input asp-for="Price" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Cover Image</th>
+                            <td>
+                                <input asp-for="CoverImage" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                @*<button type="submit">Save</button>*@
+                                <input type="submit" value="Save" class="btn btn-success" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
