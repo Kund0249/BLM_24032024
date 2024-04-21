@@ -1,0 +1,44 @@
+﻿@model List<BookModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class="mt-2 mb-3">
+                    <a asp-action="Create" class="btn btn-primary">Add Book</a>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Price</th>
+                            <th>No. of Pages</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.BookName</td>
+                            <td>@item.Price</td>
+                            <td>@item.NoPages</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

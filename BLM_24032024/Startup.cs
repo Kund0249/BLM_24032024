@@ -28,6 +28,7 @@ namespace BLM_24032024
             //services.AddRazorPages();
             services.AddMvc();
             services.AddSingleton<IPublisherRepo,PublisherRepo>();
+            services.AddSingleton<IBookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

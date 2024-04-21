@@ -1,5 +1,7 @@
 ﻿using BLM.DataAccess.ISERVICE;
+using BLM.Model;
 using BLM_24032024.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -13,13 +15,21 @@ namespace BLM_24032024.Controllers
     public class BookController : Controller
     {
         private readonly IPublisherRepo publisher;
-        public BookController(IPublisherRepo publisher)
+        private readonly IWebHostEnvironment Env;
+        private readonly IBookRepository book;
+        public BookController(IPublisherRepo publisher,
+            IWebHostEnvironment Env,
+            IBookRepository book)
         {
             this.publisher = publisher;
+            this.Env = Env;
+            this.book = book;
         }
         public IActionResult Index()
         {
-            return View();
+            List<BookModel> bookList = book.GetBooks().
+                                       Select(x => BookModel.Convert(x)).ToList();
+            return View(bookList);
         }
 
         [HttpGet]
@@ -41,8 +51,35 @@ namespace BLM_24032024.Controllers
         [HttpPost]
         public IActionResult Create(BookCreateModel model)
         {
-            //model.CoverImage.CopyTo(new FileStream("", FileMode.Create));
-            return View();
+            if(model.CoverImage != null)
+            {
+                string folder = "BookCoverImage";
+                string serverFolder = Path.Combine(Env.WebRootPath, folder);
+                string FileName = Guid.NewGuid().ToString() + "_" + model.CoverImage.FileName;
+                string filePath = Path.Combine(serverFolder, FileName);
+                model.CoverImage.CopyTo(new FileStream(filePath, FileMode.Create));
+
+                BookModel bookModel = new BookModel()
+                {
+                    BookName = model.BookName,
+                    NoPages = model.NoPage,
+                    Price = model.Price,
+                    CoverImagePath = FileName
+                };
+
+                book.AddBook(BookModel.Convert(bookModel));
+                return RedirectToAction(nameof(Index));
+            }
+
+            model.PublisherList = publisher.
+                                    GetPublisher.
+                                    Select(x => new SelectListItem()
+                                    {
+                                        Text = x.Name,
+                                        Value = x.Id.ToString()
+                                    }).ToList();
+           
+            return View(model);
         }
 
     }

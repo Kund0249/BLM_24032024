@@ -23,5 +23,6 @@ namespace BLM.DataAccess
 
         public DbSet<PublisherEntity> Publishers { get; set; }
         public DbSet<BookEntity> Books { get; set; }
+        public DbSet<AuthorEntity> Authors { get; set; }
     }
 }
