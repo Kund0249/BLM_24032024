@@ -1,4 +1,4 @@
-﻿@model List<BookModel>
+﻿@model BLM_24032024.Models.BookListWrapper
 @{
     Layout = null;
 }
@@ -16,7 +16,14 @@
         <div class="row">
             <div class="col-6 offset-3">
                 <div class="mt-2 mb-3">
-                    <a asp-action="Create" class="btn btn-primary">Add Book</a>
+                    <div class="row">
+                        <div class="col-4">
+                            <a asp-action="Create" class="btn btn-primary">Add Book</a>
+                        </div>
+                        <div class="col-8">
+                            <partial name="~/Views/Shared/_Pagenation.cshtml" model="Model.PageInfo" />
+                        </div>
+                    </div>
                 </div>
                 <table class="table">
                     <thead>
@@ -27,13 +34,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Books)
                         {
-                        <tr>
-                            <td>@item.BookName</td>
-                            <td>@item.Price</td>
-                            <td>@item.NoPages</td>
-                        </tr>
+                            <tr>
+                                <td>@item.BookName</td>
+                                <td>@item.Price</td>
+                                <td>@item.NoPages</td>
+                            </tr>
                         }
                     </tbody>
                 </table>

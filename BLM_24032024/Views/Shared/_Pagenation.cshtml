@@ -1,0 +1,38 @@
+﻿@model BLM_24032024.Models.Pager
+    <style>
+        .disable {
+            pointer-events: none;
+            cursor: default;
+        }
+    </style>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.TotalPage > 1)
+            {
+
+                if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-route-page="@(Model.CurrentPage-1)">Previous</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link disable" href="#">Previous</a></li>
+                }
+
+                for (int i = Model.StartPage; i <= Model.EndPage; i++)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-route-page="@i">@i</a></li>
+                }
+
+                if (Model.CurrentPage < Model.TotalPage)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="@Model.ActionName" asp-controller="@Model.ControllerName" asp-route-page="@(Model.CurrentPage+1)">Next</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link disable" href="#">Next</a></li>
+                }
+            }
+
+        </ul>
+    </nav>

@@ -25,11 +25,35 @@ namespace BLM_24032024.Controllers
             this.Env = Env;
             this.book = book;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            List<BookModel> bookList = book.GetBooks().
+            //skip = (page-1)*RecordPerPage
+           
+            var data = book.GetBooks();
+
+            int TotalRecord = data.Count();//18
+            int RecordPerPage = 5;
+            int TotalPages = (int)Math.Ceiling((double)TotalRecord / RecordPerPage);
+
+            Pager pager = new Pager()
+            {
+                CurrentPage = page,
+                StartPage = Math.Max(1, Math.Min(page - 3, page + 6)),
+                EndPage = Math.Min(page + 6, TotalPages),
+                TotalPage = TotalPages,
+                ControllerName = "Book",
+                ActionName = "Index"
+            };
+
+            List<BookModel> bookList = data.Skip((page - 1) * RecordPerPage).Take(RecordPerPage).
                                        Select(x => BookModel.Convert(x)).ToList();
-            return View(bookList);
+
+            BookListWrapper wrapper = new BookListWrapper()
+            {
+                Books = bookList,
+                PageInfo = pager
+            };
+            return View(wrapper);
         }
 
         [HttpGet]
